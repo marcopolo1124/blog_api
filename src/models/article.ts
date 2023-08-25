@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { marked } from "marked";
 import slugify from "slugify";
-import { sanitize } from "dompurify";
+import { sanitize } from "isomorphic-dompurify";
 import IArticle from "../types/IArticle";
 
 const articleSchema = new mongoose.Schema<IArticle>({

@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import cors from "cors";
 import articleRouter from "./routes/articles";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -10,6 +11,12 @@ const MONGO_DB_URL = process.env.MONGO_DB_URL || "mongodb://localhost/blog";
 
 mongoose.connect(MONGO_DB_URL);
 app.use(express.json());
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+        optionsSuccessStatus: 200
+    })
+);
 app.get("/", (req, res, next) => {
     res.send({
         message: "alive"
@@ -23,9 +30,10 @@ const errorHandler = (
     res: Response,
     next: NextFunction
 ) => {
+    console.log("failed");
     res.status(500).send({
         message: "Service failure",
-        error: error
+        error: error.message
     });
 };
 

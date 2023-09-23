@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import { origin } from "./app.config";
 import cors from "cors";
 import articleRouter from "./routes/articles";
 import mongoose from "mongoose";
@@ -8,12 +9,13 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8080;
 const MONGO_DB_URL = process.env.MONGO_DB_URL || "mongodb://localhost/blog";
+const UNIVERSE = process.env.UNIVERSE || "development";
 
 mongoose.connect(MONGO_DB_URL);
 app.use(express.json());
 app.use(
     cors({
-        origin: "http://localhost:5173",
+        origin: origin[UNIVERSE],
         optionsSuccessStatus: 200
     })
 );
